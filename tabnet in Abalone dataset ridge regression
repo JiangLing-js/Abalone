@@ -1,0 +1,974 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "9e112ca7",
+   "metadata": {
+    "_cell_guid": "b1076dfc-b9ad-4769-8c92-a6c4dae69d19",
+    "_uuid": "8f2839f25d086af736a60e9eeb907d3b93b6e0e5",
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:30:04.498365Z",
+     "iopub.status.busy": "2024-04-14T13:30:04.497941Z",
+     "iopub.status.idle": "2024-04-14T13:30:07.468024Z",
+     "shell.execute_reply": "2024-04-14T13:30:07.466601Z"
+    },
+    "papermill": {
+     "duration": 2.983376,
+     "end_time": "2024-04-14T13:30:07.471020",
+     "exception": false,
+     "start_time": "2024-04-14T13:30:04.487644",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "/kaggle/input/playground-series-s4e4/sample_submission.csv\n",
+      "/kaggle/input/playground-series-s4e4/train.csv\n",
+      "/kaggle/input/playground-series-s4e4/test.csv\n",
+      "/kaggle/input/abalone1/abalone.csv\n"
+     ]
+    }
+   ],
+   "source": [
+    "# This Python 3 environment comes with many helpful analytics libraries installed\n",
+    "# It is defined by the kaggle/python Docker image: https://github.com/kaggle/docker-python\n",
+    "# For example, here's several helpful packages to load\n",
+    "\n",
+    "import numpy as np # linear algebra\n",
+    "import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)\n",
+    "from sklearn.metrics import mean_squared_error\n",
+    "# Input data files are available in the read-only \"../input/\" directory\n",
+    "# For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory\n",
+    "\n",
+    "import os\n",
+    "for dirname, _, filenames in os.walk('/kaggle/input'):\n",
+    "    for filename in filenames:\n",
+    "        print(os.path.join(dirname, filename))\n",
+    "\n",
+    "# You can write up to 20GB to the current directory (/kaggle/working/) that gets preserved as output when you create a version using \"Save & Run All\" \n",
+    "# You can also write temporary files to /kaggle/temp/, but they won't be saved outside of the current session"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "e9cb50db",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:30:07.489571Z",
+     "iopub.status.busy": "2024-04-14T13:30:07.488947Z",
+     "iopub.status.idle": "2024-04-14T13:30:25.882243Z",
+     "shell.execute_reply": "2024-04-14T13:30:25.880846Z"
+    },
+    "papermill": {
+     "duration": 18.405894,
+     "end_time": "2024-04-14T13:30:25.885202",
+     "exception": false,
+     "start_time": "2024-04-14T13:30:07.479308",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Collecting pytorch-tabnet\r\n",
+      "  Downloading pytorch_tabnet-4.1.0-py3-none-any.whl.metadata (15 kB)\r\n",
+      "Requirement already satisfied: numpy>=1.17 in /opt/conda/lib/python3.10/site-packages (from pytorch-tabnet) (1.26.4)\r\n",
+      "Requirement already satisfied: scikit_learn>0.21 in /opt/conda/lib/python3.10/site-packages (from pytorch-tabnet) (1.2.2)\r\n",
+      "Requirement already satisfied: scipy>1.4 in /opt/conda/lib/python3.10/site-packages (from pytorch-tabnet) (1.11.4)\r\n",
+      "Requirement already satisfied: torch>=1.3 in /opt/conda/lib/python3.10/site-packages (from pytorch-tabnet) (2.1.2+cpu)\r\n",
+      "Requirement already satisfied: tqdm>=4.36 in /opt/conda/lib/python3.10/site-packages (from pytorch-tabnet) (4.66.1)\r\n",
+      "Requirement already satisfied: joblib>=1.1.1 in /opt/conda/lib/python3.10/site-packages (from scikit_learn>0.21->pytorch-tabnet) (1.3.2)\r\n",
+      "Requirement already satisfied: threadpoolctl>=2.0.0 in /opt/conda/lib/python3.10/site-packages (from scikit_learn>0.21->pytorch-tabnet) (3.2.0)\r\n",
+      "Requirement already satisfied: filelock in /opt/conda/lib/python3.10/site-packages (from torch>=1.3->pytorch-tabnet) (3.13.1)\r\n",
+      "Requirement already satisfied: typing-extensions in /opt/conda/lib/python3.10/site-packages (from torch>=1.3->pytorch-tabnet) (4.9.0)\r\n",
+      "Requirement already satisfied: sympy in /opt/conda/lib/python3.10/site-packages (from torch>=1.3->pytorch-tabnet) (1.12)\r\n",
+      "Requirement already satisfied: networkx in /opt/conda/lib/python3.10/site-packages (from torch>=1.3->pytorch-tabnet) (3.2.1)\r\n",
+      "Requirement already satisfied: jinja2 in /opt/conda/lib/python3.10/site-packages (from torch>=1.3->pytorch-tabnet) (3.1.2)\r\n",
+      "Requirement already satisfied: fsspec in /opt/conda/lib/python3.10/site-packages (from torch>=1.3->pytorch-tabnet) (2024.2.0)\r\n",
+      "Requirement already satisfied: MarkupSafe>=2.0 in /opt/conda/lib/python3.10/site-packages (from jinja2->torch>=1.3->pytorch-tabnet) (2.1.3)\r\n",
+      "Requirement already satisfied: mpmath>=0.19 in /opt/conda/lib/python3.10/site-packages (from sympy->torch>=1.3->pytorch-tabnet) (1.3.0)\r\n",
+      "Downloading pytorch_tabnet-4.1.0-py3-none-any.whl (44 kB)\r\n",
+      "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m44.5/44.5 kB\u001b[0m \u001b[31m1.6 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\r\n",
+      "\u001b[?25hInstalling collected packages: pytorch-tabnet\r\n",
+      "Successfully installed pytorch-tabnet-4.1.0\r\n"
+     ]
+    }
+   ],
+   "source": [
+    "!pip install pytorch-tabnet"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "72d49028",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:30:25.906726Z",
+     "iopub.status.busy": "2024-04-14T13:30:25.905173Z",
+     "iopub.status.idle": "2024-04-14T13:30:26.320369Z",
+     "shell.execute_reply": "2024-04-14T13:30:26.318691Z"
+    },
+    "papermill": {
+     "duration": 0.42868,
+     "end_time": "2024-04-14T13:30:26.322958",
+     "exception": false,
+     "start_time": "2024-04-14T13:30:25.894278",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "   Length  Diameter  Height  Whole weight  Whole weight.1  Whole weight.2  \\\n",
+      "0   0.455     0.365   0.095        0.5140          0.2245          0.1010   \n",
+      "1   0.350     0.265   0.090        0.2255          0.0995          0.0485   \n",
+      "2   0.530     0.420   0.135        0.6770          0.2565          0.1415   \n",
+      "\n",
+      "   Shell weight  Rings  Sex_F  Sex_I  Sex_M  \n",
+      "0          0.15     15  False  False   True  \n",
+      "1          0.07      7  False  False   True  \n",
+      "2          0.21      9   True  False  False  \n"
+     ]
+    }
+   ],
+   "source": [
+    "train_dataset_root = r\"/kaggle/input/playground-series-s4e4/train.csv\"\n",
+    "train_dataset_root2 = r\"/kaggle/input/abalone1/abalone.csv\"\n",
+    "test_dataset_root = r\"/kaggle/input/playground-series-s4e4/test.csv\"\n",
+    "train_dataset = pd.read_csv(train_dataset_root)\n",
+    "# one hot\n",
+    "train_dataset = pd.get_dummies(train_dataset, columns=['Sex'])\n",
+    "test_dataset = pd.read_csv(test_dataset_root)\n",
+    "test_dataset = pd.get_dummies(test_dataset, columns=['Sex'])\n",
+    "# print(train_dataset.head(3))\n",
+    "train_dataset2 = pd.read_csv(train_dataset_root2)\n",
+    "train_dataset2 = pd.get_dummies(train_dataset2, columns=['Sex'])\n",
+    "train_dataset2 = train_dataset2.rename(columns={'Shucked weight': 'Whole weight.1', 'Viscera weight': 'Whole weight.2'})\n",
+    "print(train_dataset2.head(3))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "d3b63ae7",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:30:26.343853Z",
+     "iopub.status.busy": "2024-04-14T13:30:26.343432Z",
+     "iopub.status.idle": "2024-04-14T13:30:26.441204Z",
+     "shell.execute_reply": "2024-04-14T13:30:26.439479Z"
+    },
+    "papermill": {
+     "duration": 0.111323,
+     "end_time": "2024-04-14T13:30:26.443916",
+     "exception": false,
+     "start_time": "2024-04-14T13:30:26.332593",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Shape of X: (90615, 10)\n",
+      "Shape of X2: (4177, 10)\n",
+      "[[0.55 0.43 0.15 ... True False False]\n",
+      " [0.63 0.49 0.145 ... True False False]\n",
+      " [0.16 0.11 0.025 ... False True False]\n",
+      " ...\n",
+      " [0.6 0.475 0.205 ... False False True]\n",
+      " [0.625 0.485 0.15 ... True False False]\n",
+      " [0.71 0.555 0.195 ... False False True]]\n",
+      "[[0.455 0.365 0.095 ... False False True]\n",
+      " [0.35 0.265 0.09 ... False False True]\n",
+      " [0.53 0.42 0.135 ... True False False]\n",
+      " ...\n",
+      " [0.6 0.475 0.205 ... False False True]\n",
+      " [0.625 0.485 0.15 ... True False False]\n",
+      " [0.71 0.555 0.195 ... False False True]]\n",
+      "[11 11  6 ...  9 10 12]\n"
+     ]
+    }
+   ],
+   "source": [
+    "X = train_dataset.drop(columns=[\"id\",\"Rings\"]).values  # feature\n",
+    "X2 = train_dataset2.drop(columns=[\"Rings\"]).values\n",
+    "print(\"Shape of X:\", X.shape)\n",
+    "print(\"Shape of X2:\", X2.shape)\n",
+    "X = np.concatenate((X, X2), axis=0)\n",
+    "y = train_dataset['Rings'].values  # label\n",
+    "y2 = train_dataset2['Rings'].values  # label\n",
+    "y = np.concatenate((y, y2), axis=0)\n",
+    "print(X)\n",
+    "print(X2)\n",
+    "print(y)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "455b612e",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:30:26.464638Z",
+     "iopub.status.busy": "2024-04-14T13:30:26.464223Z",
+     "iopub.status.idle": "2024-04-14T13:30:26.493373Z",
+     "shell.execute_reply": "2024-04-14T13:30:26.492277Z"
+    },
+    "papermill": {
+     "duration": 0.04432,
+     "end_time": "2024-04-14T13:30:26.497502",
+     "exception": false,
+     "start_time": "2024-04-14T13:30:26.453182",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(94792, 10)\n",
+      "(94792, 3)\n",
+      "(94792, 7)\n",
+      "[[1 0 0]\n",
+      " [1 0 0]\n",
+      " [0 1 0]\n",
+      " ...\n",
+      " [0 0 1]\n",
+      " [1 0 0]\n",
+      " [0 0 1]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "sex_features = X[:,-3:]\n",
+    "X_without_sex = X[:, :-3]\n",
+    "sex_features_numeric = sex_features.astype(int)\n",
+    "print(X.shape)\n",
+    "print(sex_features.shape)\n",
+    "print(X_without_sex.shape)\n",
+    "print(sex_features_numeric)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e333a687",
+   "metadata": {
+    "papermill": {
+     "duration": 0.009993,
+     "end_time": "2024-04-14T13:30:26.517332",
+     "exception": false,
+     "start_time": "2024-04-14T13:30:26.507339",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# **Preprocess**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "1df8fc76",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:30:26.538385Z",
+     "iopub.status.busy": "2024-04-14T13:30:26.537955Z",
+     "iopub.status.idle": "2024-04-14T13:30:31.246279Z",
+     "shell.execute_reply": "2024-04-14T13:30:31.245006Z"
+    },
+    "papermill": {
+     "duration": 4.72292,
+     "end_time": "2024-04-14T13:30:31.249720",
+     "exception": false,
+     "start_time": "2024-04-14T13:30:26.526800",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[-2.2602359  -2.21182968 -2.11147625 ...  0.          1.\n",
+      "   0.        ]\n",
+      " [ 1.71247228  1.86616924  1.5541619  ...  0.          0.\n",
+      "   1.        ]\n",
+      " [ 1.28984375  1.20349441  1.03049931 ...  0.          0.\n",
+      "   1.        ]\n",
+      " ...\n",
+      " [ 0.10648387  0.18399468 -0.27865717 ...  0.          1.\n",
+      "   0.        ]\n",
+      " [ 1.50115802  1.2544694   1.29233061 ...  0.          0.\n",
+      "   1.        ]\n",
+      " [-1.24592743 -1.29427992 -1.06415106 ...  0.          1.\n",
+      "   0.        ]]\n",
+      "[[ 4]\n",
+      " [11]\n",
+      " [ 9]\n",
+      " ...\n",
+      " [ 8]\n",
+      " [11]\n",
+      " [ 7]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "from sklearn.preprocessing import StandardScaler\n",
+    "import torch\n",
+    "import torch.nn as nn\n",
+    "import torch.optim as optim\n",
+    "from sklearn.model_selection import train_test_split\n",
+    "scaler = StandardScaler()\n",
+    "X_scaled_ws = scaler.fit_transform(X_without_sex)\n",
+    "X_scaled = np.concatenate((X_scaled_ws, sex_features_numeric), axis=1)\n",
+    "X_train, X_val, y_train, y_val = train_test_split(X_scaled, y, test_size=0.2, random_state=42)\n",
+    "print(X_train)\n",
+    "\n",
+    "y_train = np.reshape(y_train, (-1, 1))\n",
+    "y_val = np.reshape(y_val, (-1, 1))\n",
+    "print(y_train)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "caccfbd8",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:30:31.275923Z",
+     "iopub.status.busy": "2024-04-14T13:30:31.275132Z",
+     "iopub.status.idle": "2024-04-14T13:33:06.249016Z",
+     "shell.execute_reply": "2024-04-14T13:33:06.247752Z"
+    },
+    "papermill": {
+     "duration": 154.988721,
+     "end_time": "2024-04-14T13:33:06.251894",
+     "exception": false,
+     "start_time": "2024-04-14T13:30:31.263173",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/opt/conda/lib/python3.10/site-packages/pytorch_tabnet/abstract_model.py:82: UserWarning: Device used : cpu\n",
+      "  warnings.warn(f\"Device used : {self.device}\")\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "epoch 0  | loss: 12.42995| val_0_rmsle: 0.19312 |  0:00:05s\n",
+      "epoch 1  | loss: 3.94806 | val_0_rmsle: 0.16452 |  0:00:10s\n",
+      "epoch 2  | loss: 3.83119 | val_0_rmsle: 0.16248 |  0:00:16s\n",
+      "epoch 3  | loss: 3.83368 | val_0_rmsle: 0.16782 |  0:00:21s\n",
+      "epoch 4  | loss: 3.80894 | val_0_rmsle: 0.15865 |  0:00:27s\n",
+      "epoch 5  | loss: 3.79094 | val_0_rmsle: 0.15683 |  0:00:32s\n",
+      "epoch 6  | loss: 3.7193  | val_0_rmsle: 0.15757 |  0:00:38s\n",
+      "epoch 7  | loss: 3.70343 | val_0_rmsle: 0.15752 |  0:00:43s\n",
+      "epoch 8  | loss: 3.71072 | val_0_rmsle: 0.15661 |  0:00:49s\n",
+      "epoch 9  | loss: 3.70443 | val_0_rmsle: 0.15901 |  0:00:54s\n",
+      "epoch 10 | loss: 3.70822 | val_0_rmsle: 0.15673 |  0:01:00s\n",
+      "epoch 11 | loss: 3.70083 | val_0_rmsle: 0.15646 |  0:01:06s\n",
+      "epoch 12 | loss: 3.68392 | val_0_rmsle: 0.15587 |  0:01:11s\n",
+      "epoch 13 | loss: 3.67879 | val_0_rmsle: 0.15574 |  0:01:17s\n",
+      "epoch 14 | loss: 3.67523 | val_0_rmsle: 0.15691 |  0:01:22s\n",
+      "epoch 15 | loss: 3.6612  | val_0_rmsle: 0.15644 |  0:01:28s\n",
+      "epoch 16 | loss: 3.65866 | val_0_rmsle: 0.15524 |  0:01:33s\n",
+      "epoch 17 | loss: 3.67338 | val_0_rmsle: 0.15775 |  0:01:39s\n",
+      "epoch 18 | loss: 3.66952 | val_0_rmsle: 0.16102 |  0:01:44s\n",
+      "epoch 19 | loss: 3.69518 | val_0_rmsle: 0.15531 |  0:01:49s\n",
+      "epoch 20 | loss: 3.65186 | val_0_rmsle: 0.15727 |  0:01:55s\n",
+      "epoch 21 | loss: 3.63407 | val_0_rmsle: 0.15543 |  0:02:00s\n",
+      "epoch 22 | loss: 3.65079 | val_0_rmsle: 0.15858 |  0:02:06s\n",
+      "epoch 23 | loss: 3.65247 | val_0_rmsle: 0.1561  |  0:02:11s\n",
+      "epoch 24 | loss: 3.62029 | val_0_rmsle: 0.15886 |  0:02:17s\n",
+      "epoch 25 | loss: 3.64115 | val_0_rmsle: 0.15926 |  0:02:22s\n",
+      "epoch 26 | loss: 3.65729 | val_0_rmsle: 0.15907 |  0:02:28s\n",
+      "\n",
+      "Early stopping occurred at epoch 26 with best_epoch = 16 and best_val_0_rmsle = 0.15524\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/opt/conda/lib/python3.10/site-packages/pytorch_tabnet/callbacks.py:172: UserWarning: Best weights from best epoch are automatically used!\n",
+      "  warnings.warn(wrn_msg)\n"
+     ]
+    }
+   ],
+   "source": [
+    "from pytorch_tabnet.tab_model import TabNetRegressor\n",
+    "\n",
+    "clf = TabNetRegressor(n_steps=3, cat_idxs=[7,8,9], cat_dims=[2,2,2], device_name=\"cuda\")\n",
+    "clf.fit(\n",
+    "    X_train, y_train,\n",
+    "    eval_set=[(X_val, y_val)],\n",
+    "    eval_metric=['rmsle'], \n",
+    ")\n",
+    "y_val_pred_tabnet = clf.predict(X_val)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "e44c1cba",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:33:06.279257Z",
+     "iopub.status.busy": "2024-04-14T13:33:06.278191Z",
+     "iopub.status.idle": "2024-04-14T13:33:06.284509Z",
+     "shell.execute_reply": "2024-04-14T13:33:06.282954Z"
+    },
+    "papermill": {
+     "duration": 0.023411,
+     "end_time": "2024-04-14T13:33:06.287549",
+     "exception": false,
+     "start_time": "2024-04-14T13:33:06.264138",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "# from pytorch_tabnet.multitask import TabNetMultiTaskClassifier\n",
+    "# clf2 = TabNetMultiTaskClassifier()\n",
+    "# clf2.fit(\n",
+    "#     X_train, y_train,\n",
+    "#     eval_set=[(X_val, y_val)],\n",
+    "#     eval_metric=['rmsle'], \n",
+    "# )\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "78795a28",
+   "metadata": {
+    "papermill": {
+     "duration": 0.011999,
+     "end_time": "2024-04-14T13:33:06.311817",
+     "exception": false,
+     "start_time": "2024-04-14T13:33:06.299818",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# XGB"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "d708911c",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:33:06.339581Z",
+     "iopub.status.busy": "2024-04-14T13:33:06.339170Z",
+     "iopub.status.idle": "2024-04-14T13:33:07.237398Z",
+     "shell.execute_reply": "2024-04-14T13:33:07.236400Z"
+    },
+    "papermill": {
+     "duration": 0.915381,
+     "end_time": "2024-04-14T13:33:07.240437",
+     "exception": false,
+     "start_time": "2024-04-14T13:33:06.325056",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Validation RMSE: 1.8624415950332058\n"
+     ]
+    }
+   ],
+   "source": [
+    "from xgboost import XGBRegressor\n",
+    "xgb_model = XGBRegressor()\n",
+    "xgb_model.fit(X_train, y_train)\n",
+    "# 在验证集上进行预测\n",
+    "y_val_pred_xgb = xgb_model.predict(X_val)\n",
+    "\n",
+    "# 评估模型\n",
+    "val_rmse = mean_squared_error(y_val, y_val_pred_xgb, squared=False)\n",
+    "print(\"Validation RMSE:\", val_rmse)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d528aefa",
+   "metadata": {
+    "papermill": {
+     "duration": 0.011804,
+     "end_time": "2024-04-14T13:33:07.265654",
+     "exception": false,
+     "start_time": "2024-04-14T13:33:07.253850",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# Random Forest"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "106ac8a6",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:33:07.293267Z",
+     "iopub.status.busy": "2024-04-14T13:33:07.292027Z",
+     "iopub.status.idle": "2024-04-14T13:33:51.624291Z",
+     "shell.execute_reply": "2024-04-14T13:33:51.623063Z"
+    },
+    "papermill": {
+     "duration": 44.360094,
+     "end_time": "2024-04-14T13:33:51.637875",
+     "exception": false,
+     "start_time": "2024-04-14T13:33:07.277781",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/tmp/ipykernel_18/883492367.py:3: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().\n",
+      "  rf_model.fit(X_train, y_train)\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Validation RMSE: 1.8878377159399782\n"
+     ]
+    }
+   ],
+   "source": [
+    "from sklearn.ensemble import RandomForestRegressor\n",
+    "rf_model = RandomForestRegressor()\n",
+    "rf_model.fit(X_train, y_train)\n",
+    "# 在验证集上进行预测\n",
+    "y_val_pred_rf = rf_model.predict(X_val)\n",
+    "# 评估模型\n",
+    "val_rmse = mean_squared_error(y_val, y_val_pred_rf, squared=False)\n",
+    "print(\"Validation RMSE:\", val_rmse)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e43d82fb",
+   "metadata": {
+    "papermill": {
+     "duration": 0.01201,
+     "end_time": "2024-04-14T13:33:51.662139",
+     "exception": false,
+     "start_time": "2024-04-14T13:33:51.650129",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# Gradient Boosting Tree"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "04d8ab6b",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:33:51.689083Z",
+     "iopub.status.busy": "2024-04-14T13:33:51.688213Z",
+     "iopub.status.idle": "2024-04-14T13:34:04.593568Z",
+     "shell.execute_reply": "2024-04-14T13:34:04.591904Z"
+    },
+    "papermill": {
+     "duration": 12.921614,
+     "end_time": "2024-04-14T13:34:04.596010",
+     "exception": false,
+     "start_time": "2024-04-14T13:33:51.674396",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/opt/conda/lib/python3.10/site-packages/sklearn/ensemble/_gb.py:437: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().\n",
+      "  y = column_or_1d(y, warn=True)\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Validation RMSE: 1.9118569792242652\n"
+     ]
+    }
+   ],
+   "source": [
+    "from sklearn.ensemble import GradientBoostingRegressor\n",
+    "gb_model = GradientBoostingRegressor()\n",
+    "gb_model.fit(X_train, y_train)\n",
+    "# 在验证集上进行预测\n",
+    "y_val_pred_gb = gb_model.predict(X_val)\n",
+    "# 评估模型\n",
+    "val_rmse = mean_squared_error(y_val, y_val_pred_gb, squared=False)\n",
+    "print(\"Validation RMSE:\", val_rmse)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "dbb3594d",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:34:04.623600Z",
+     "iopub.status.busy": "2024-04-14T13:34:04.623108Z",
+     "iopub.status.idle": "2024-04-14T13:34:04.674258Z",
+     "shell.execute_reply": "2024-04-14T13:34:04.672706Z"
+    },
+    "papermill": {
+     "duration": 0.06973,
+     "end_time": "2024-04-14T13:34:04.678552",
+     "exception": false,
+     "start_time": "2024-04-14T13:34:04.608822",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: \"▸\";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: \"▾\";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: \"\";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: \"\";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: \"\";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id=\"sk-container-id-1\" class=\"sk-top-container\"><div class=\"sk-text-repr-fallback\"><pre>Ridge()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class=\"sk-container\" hidden><div class=\"sk-item\"><div class=\"sk-estimator sk-toggleable\"><input class=\"sk-toggleable__control sk-hidden--visually\" id=\"sk-estimator-id-1\" type=\"checkbox\" checked><label for=\"sk-estimator-id-1\" class=\"sk-toggleable__label sk-toggleable__label-arrow\">Ridge</label><div class=\"sk-toggleable__content\"><pre>Ridge()</pre></div></div></div></div></div>"
+      ],
+      "text/plain": [
+       "Ridge()"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "from sklearn.ensemble import GradientBoostingRegressor\n",
+    "from sklearn.linear_model import Ridge\n",
+    "from sklearn.metrics import mean_squared_error\n",
+    "X_stacked_train = np.column_stack((y_val_pred_tabnet, y_val_pred_xgb, y_val_pred_rf, y_val_pred_gb))\n",
+    "# 使用Ridge回归拟合\n",
+    "ridge_regressor = Ridge(alpha=1.0)  # 可以调整alpha参数\n",
+    "ridge_regressor.fit(X_stacked_train, y_val)  # y_val是真实的目标值\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "1ff8ccb2",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:34:04.738627Z",
+     "iopub.status.busy": "2024-04-14T13:34:04.737839Z",
+     "iopub.status.idle": "2024-04-14T13:34:04.896324Z",
+     "shell.execute_reply": "2024-04-14T13:34:04.895250Z"
+    },
+    "papermill": {
+     "duration": 0.192369,
+     "end_time": "2024-04-14T13:34:04.899357",
+     "exception": false,
+     "start_time": "2024-04-14T13:34:04.706988",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "X = test_dataset.drop(columns=[\"id\"]).values\n",
+    "test_id = test_dataset[\"id\"].values\n",
+    "sex_features = X[:,-3:]\n",
+    "X_without_sex = X[:, :-3]\n",
+    "sex_features_numeric = sex_features.astype(int)\n",
+    "scaler = StandardScaler()\n",
+    "X_scaled_ws = scaler.fit_transform(X_without_sex)\n",
+    "test_scaled = np.concatenate((X_scaled_ws, sex_features_numeric), axis=1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "f81ae3df",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:34:04.930652Z",
+     "iopub.status.busy": "2024-04-14T13:34:04.929921Z",
+     "iopub.status.idle": "2024-04-14T13:34:06.505973Z",
+     "shell.execute_reply": "2024-04-14T13:34:06.504770Z"
+    },
+    "papermill": {
+     "duration": 1.595158,
+     "end_time": "2024-04-14T13:34:06.508811",
+     "exception": false,
+     "start_time": "2024-04-14T13:34:04.913653",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[ 9.59613 ]\n",
+      " [ 9.459299]\n",
+      " [ 9.777443]\n",
+      " ...\n",
+      " [12.728162]\n",
+      " [12.583682]\n",
+      " [ 8.63789 ]]\n",
+      "[ 9.59613   9.459299  9.777443 ... 12.728162 12.583682  8.63789 ]\n"
+     ]
+    }
+   ],
+   "source": [
+    "y_test_pred_tabnet = clf.predict(test_scaled)\n",
+    "\n",
+    "print(y_test_pred_tabnet)\n",
+    "print(y_test_pred_tabnet.flatten())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "78d7ddc5",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:34:06.537871Z",
+     "iopub.status.busy": "2024-04-14T13:34:06.537362Z",
+     "iopub.status.idle": "2024-04-14T13:34:06.628157Z",
+     "shell.execute_reply": "2024-04-14T13:34:06.627070Z"
+    },
+    "papermill": {
+     "duration": 0.108799,
+     "end_time": "2024-04-14T13:34:06.630886",
+     "exception": false,
+     "start_time": "2024-04-14T13:34:06.522087",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "y_test_pred_xgb = xgb_model.predict(test_scaled)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "ed057818",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:34:06.661187Z",
+     "iopub.status.busy": "2024-04-14T13:34:06.660004Z",
+     "iopub.status.idle": "2024-04-14T13:34:08.921801Z",
+     "shell.execute_reply": "2024-04-14T13:34:08.920517Z"
+    },
+    "papermill": {
+     "duration": 2.279558,
+     "end_time": "2024-04-14T13:34:08.924956",
+     "exception": false,
+     "start_time": "2024-04-14T13:34:06.645398",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "y_test_pred_rf = rf_model.predict(test_scaled)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "38482880",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:34:08.953167Z",
+     "iopub.status.busy": "2024-04-14T13:34:08.952706Z",
+     "iopub.status.idle": "2024-04-14T13:34:09.064770Z",
+     "shell.execute_reply": "2024-04-14T13:34:09.063149Z"
+    },
+    "papermill": {
+     "duration": 0.129277,
+     "end_time": "2024-04-14T13:34:09.067571",
+     "exception": false,
+     "start_time": "2024-04-14T13:34:08.938294",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "y_test_pred_gb = gb_model.predict(test_scaled)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "29808d5f",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:34:09.095462Z",
+     "iopub.status.busy": "2024-04-14T13:34:09.094997Z",
+     "iopub.status.idle": "2024-04-14T13:34:09.108903Z",
+     "shell.execute_reply": "2024-04-14T13:34:09.107181Z"
+    },
+    "papermill": {
+     "duration": 0.033069,
+     "end_time": "2024-04-14T13:34:09.113553",
+     "exception": false,
+     "start_time": "2024-04-14T13:34:09.080484",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[10.27751851]\n",
+      " [ 9.80350197]\n",
+      " [10.115603  ]\n",
+      " ...\n",
+      " [12.16525833]\n",
+      " [12.78924744]\n",
+      " [ 8.81601348]]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 使用集成模型进行预测\n",
+    "X_stacked_test = np.column_stack((y_test_pred_tabnet, y_test_pred_xgb, y_test_pred_rf, y_test_pred_gb))\n",
+    "y_test_pred_ensemble = ridge_regressor.predict(X_stacked_test)\n",
+    "print(y_test_pred_ensemble)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "4ecdaaa6",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-14T13:34:09.174168Z",
+     "iopub.status.busy": "2024-04-14T13:34:09.173285Z",
+     "iopub.status.idle": "2024-04-14T13:34:09.415695Z",
+     "shell.execute_reply": "2024-04-14T13:34:09.414239Z"
+    },
+    "papermill": {
+     "duration": 0.27578,
+     "end_time": "2024-04-14T13:34:09.418555",
+     "exception": false,
+     "start_time": "2024-04-14T13:34:09.142775",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "result_df = pd.DataFrame({'id': test_id, 'Rings': y_test_pred_ensemble.flatten()})\n",
+    "# 将DataFrame保存到CSV文件中\n",
+    "result_df.to_csv('submission.csv', index=False)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kaggle": {
+   "accelerator": "none",
+   "dataSources": [
+    {
+     "databundleVersionId": 8096274,
+     "sourceId": 72489,
+     "sourceType": "competition"
+    },
+    {
+     "datasetId": 4790313,
+     "sourceId": 8109578,
+     "sourceType": "datasetVersion"
+    }
+   ],
+   "dockerImageVersionId": 30684,
+   "isGpuEnabled": false,
+   "isInternetEnabled": true,
+   "language": "python",
+   "sourceType": "notebook"
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.13"
+  },
+  "papermill": {
+   "default_parameters": {},
+   "duration": 251.439803,
+   "end_time": "2024-04-14T13:34:12.435495",
+   "environment_variables": {},
+   "exception": null,
+   "input_path": "__notebook__.ipynb",
+   "output_path": "__notebook__.ipynb",
+   "parameters": {},
+   "start_time": "2024-04-14T13:30:00.995692",
+   "version": "2.5.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
