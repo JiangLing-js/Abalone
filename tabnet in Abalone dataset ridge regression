@@ -3,21 +3,21 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "9e112ca7",
+   "id": "d30b2226",
    "metadata": {
     "_cell_guid": "b1076dfc-b9ad-4769-8c92-a6c4dae69d19",
     "_uuid": "8f2839f25d086af736a60e9eeb907d3b93b6e0e5",
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:30:04.498365Z",
-     "iopub.status.busy": "2024-04-14T13:30:04.497941Z",
-     "iopub.status.idle": "2024-04-14T13:30:07.468024Z",
-     "shell.execute_reply": "2024-04-14T13:30:07.466601Z"
+     "iopub.execute_input": "2024-04-15T13:55:20.596201Z",
+     "iopub.status.busy": "2024-04-15T13:55:20.595712Z",
+     "iopub.status.idle": "2024-04-15T13:55:22.953215Z",
+     "shell.execute_reply": "2024-04-15T13:55:22.951988Z"
     },
     "papermill": {
-     "duration": 2.983376,
-     "end_time": "2024-04-14T13:30:07.471020",
+     "duration": 2.373812,
+     "end_time": "2024-04-15T13:55:22.955548",
      "exception": false,
-     "start_time": "2024-04-14T13:30:04.487644",
+     "start_time": "2024-04-15T13:55:20.581736",
      "status": "completed"
     },
     "tags": []
@@ -27,10 +27,10 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
+      "/kaggle/input/abalone1/abalone.csv\n",
       "/kaggle/input/playground-series-s4e4/sample_submission.csv\n",
       "/kaggle/input/playground-series-s4e4/train.csv\n",
-      "/kaggle/input/playground-series-s4e4/test.csv\n",
-      "/kaggle/input/abalone1/abalone.csv\n"
+      "/kaggle/input/playground-series-s4e4/test.csv\n"
      ]
     }
    ],
@@ -57,19 +57,19 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "e9cb50db",
+   "id": "ad15ff5f",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:30:07.489571Z",
-     "iopub.status.busy": "2024-04-14T13:30:07.488947Z",
-     "iopub.status.idle": "2024-04-14T13:30:25.882243Z",
-     "shell.execute_reply": "2024-04-14T13:30:25.880846Z"
+     "iopub.execute_input": "2024-04-15T13:55:22.977483Z",
+     "iopub.status.busy": "2024-04-15T13:55:22.976577Z",
+     "iopub.status.idle": "2024-04-15T13:55:39.433243Z",
+     "shell.execute_reply": "2024-04-15T13:55:39.431778Z"
     },
     "papermill": {
-     "duration": 18.405894,
-     "end_time": "2024-04-14T13:30:25.885202",
+     "duration": 16.471075,
+     "end_time": "2024-04-15T13:55:39.436370",
      "exception": false,
-     "start_time": "2024-04-14T13:30:07.479308",
+     "start_time": "2024-04-15T13:55:22.965295",
      "status": "completed"
     },
     "tags": []
@@ -97,7 +97,7 @@
       "Requirement already satisfied: MarkupSafe>=2.0 in /opt/conda/lib/python3.10/site-packages (from jinja2->torch>=1.3->pytorch-tabnet) (2.1.3)\r\n",
       "Requirement already satisfied: mpmath>=0.19 in /opt/conda/lib/python3.10/site-packages (from sympy->torch>=1.3->pytorch-tabnet) (1.3.0)\r\n",
       "Downloading pytorch_tabnet-4.1.0-py3-none-any.whl (44 kB)\r\n",
-      "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m44.5/44.5 kB\u001b[0m \u001b[31m1.6 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\r\n",
+      "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m44.5/44.5 kB\u001b[0m \u001b[31m2.3 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\r\n",
       "\u001b[?25hInstalling collected packages: pytorch-tabnet\r\n",
       "Successfully installed pytorch-tabnet-4.1.0\r\n"
      ]
@@ -110,19 +110,19 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "id": "72d49028",
+   "id": "1648f4b5",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:30:25.906726Z",
-     "iopub.status.busy": "2024-04-14T13:30:25.905173Z",
-     "iopub.status.idle": "2024-04-14T13:30:26.320369Z",
-     "shell.execute_reply": "2024-04-14T13:30:26.318691Z"
+     "iopub.execute_input": "2024-04-15T13:55:39.459505Z",
+     "iopub.status.busy": "2024-04-15T13:55:39.459060Z",
+     "iopub.status.idle": "2024-04-15T13:55:39.849408Z",
+     "shell.execute_reply": "2024-04-15T13:55:39.848132Z"
     },
     "papermill": {
-     "duration": 0.42868,
-     "end_time": "2024-04-14T13:30:26.322958",
+     "duration": 0.405324,
+     "end_time": "2024-04-15T13:55:39.852292",
      "exception": false,
-     "start_time": "2024-04-14T13:30:25.894278",
+     "start_time": "2024-04-15T13:55:39.446968",
      "status": "completed"
     },
     "tags": []
@@ -163,19 +163,19 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "d3b63ae7",
+   "id": "1ac76377",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:30:26.343853Z",
-     "iopub.status.busy": "2024-04-14T13:30:26.343432Z",
-     "iopub.status.idle": "2024-04-14T13:30:26.441204Z",
-     "shell.execute_reply": "2024-04-14T13:30:26.439479Z"
+     "iopub.execute_input": "2024-04-15T13:55:39.876128Z",
+     "iopub.status.busy": "2024-04-15T13:55:39.875706Z",
+     "iopub.status.idle": "2024-04-15T13:55:39.961867Z",
+     "shell.execute_reply": "2024-04-15T13:55:39.960744Z"
     },
     "papermill": {
-     "duration": 0.111323,
-     "end_time": "2024-04-14T13:30:26.443916",
+     "duration": 0.10146,
+     "end_time": "2024-04-15T13:55:39.964573",
      "exception": false,
-     "start_time": "2024-04-14T13:30:26.332593",
+     "start_time": "2024-04-15T13:55:39.863113",
      "status": "completed"
     },
     "tags": []
@@ -222,19 +222,19 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "id": "455b612e",
+   "id": "550f5bb0",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:30:26.464638Z",
-     "iopub.status.busy": "2024-04-14T13:30:26.464223Z",
-     "iopub.status.idle": "2024-04-14T13:30:26.493373Z",
-     "shell.execute_reply": "2024-04-14T13:30:26.492277Z"
+     "iopub.execute_input": "2024-04-15T13:55:39.987975Z",
+     "iopub.status.busy": "2024-04-15T13:55:39.987568Z",
+     "iopub.status.idle": "2024-04-15T13:55:40.015622Z",
+     "shell.execute_reply": "2024-04-15T13:55:40.014692Z"
     },
     "papermill": {
-     "duration": 0.04432,
-     "end_time": "2024-04-14T13:30:26.497502",
+     "duration": 0.043032,
+     "end_time": "2024-04-15T13:55:40.018284",
      "exception": false,
-     "start_time": "2024-04-14T13:30:26.453182",
+     "start_time": "2024-04-15T13:55:39.975252",
      "status": "completed"
     },
     "tags": []
@@ -269,13 +269,13 @@
   },
   {
    "cell_type": "markdown",
-   "id": "e333a687",
+   "id": "7d91c300",
    "metadata": {
     "papermill": {
-     "duration": 0.009993,
-     "end_time": "2024-04-14T13:30:26.517332",
+     "duration": 0.010617,
+     "end_time": "2024-04-15T13:55:40.039769",
      "exception": false,
-     "start_time": "2024-04-14T13:30:26.507339",
+     "start_time": "2024-04-15T13:55:40.029152",
      "status": "completed"
     },
     "tags": []
@@ -287,19 +287,19 @@
   {
    "cell_type": "code",
    "execution_count": 6,
-   "id": "1df8fc76",
+   "id": "7ba2d05f",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:30:26.538385Z",
-     "iopub.status.busy": "2024-04-14T13:30:26.537955Z",
-     "iopub.status.idle": "2024-04-14T13:30:31.246279Z",
-     "shell.execute_reply": "2024-04-14T13:30:31.245006Z"
+     "iopub.execute_input": "2024-04-15T13:55:40.064783Z",
+     "iopub.status.busy": "2024-04-15T13:55:40.063833Z",
+     "iopub.status.idle": "2024-04-15T13:55:43.824998Z",
+     "shell.execute_reply": "2024-04-15T13:55:43.823696Z"
     },
     "papermill": {
-     "duration": 4.72292,
-     "end_time": "2024-04-14T13:30:31.249720",
+     "duration": 3.777159,
+     "end_time": "2024-04-15T13:55:43.827692",
      "exception": false,
-     "start_time": "2024-04-14T13:30:26.526800",
+     "start_time": "2024-04-15T13:55:40.050533",
      "status": "completed"
     },
     "tags": []
@@ -352,19 +352,19 @@
   {
    "cell_type": "code",
    "execution_count": 7,
-   "id": "caccfbd8",
+   "id": "2b9df9df",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:30:31.275923Z",
-     "iopub.status.busy": "2024-04-14T13:30:31.275132Z",
-     "iopub.status.idle": "2024-04-14T13:33:06.249016Z",
-     "shell.execute_reply": "2024-04-14T13:33:06.247752Z"
+     "iopub.execute_input": "2024-04-15T13:55:43.853333Z",
+     "iopub.status.busy": "2024-04-15T13:55:43.852708Z",
+     "iopub.status.idle": "2024-04-15T13:58:03.897159Z",
+     "shell.execute_reply": "2024-04-15T13:58:03.895726Z"
     },
     "papermill": {
-     "duration": 154.988721,
-     "end_time": "2024-04-14T13:33:06.251894",
+     "duration": 140.060682,
+     "end_time": "2024-04-15T13:58:03.900092",
      "exception": false,
-     "start_time": "2024-04-14T13:30:31.263173",
+     "start_time": "2024-04-15T13:55:43.839410",
      "status": "completed"
     },
     "tags": []
@@ -382,33 +382,33 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "epoch 0  | loss: 12.42995| val_0_rmsle: 0.19312 |  0:00:05s\n",
-      "epoch 1  | loss: 3.94806 | val_0_rmsle: 0.16452 |  0:00:10s\n",
-      "epoch 2  | loss: 3.83119 | val_0_rmsle: 0.16248 |  0:00:16s\n",
-      "epoch 3  | loss: 3.83368 | val_0_rmsle: 0.16782 |  0:00:21s\n",
-      "epoch 4  | loss: 3.80894 | val_0_rmsle: 0.15865 |  0:00:27s\n",
-      "epoch 5  | loss: 3.79094 | val_0_rmsle: 0.15683 |  0:00:32s\n",
-      "epoch 6  | loss: 3.7193  | val_0_rmsle: 0.15757 |  0:00:38s\n",
-      "epoch 7  | loss: 3.70343 | val_0_rmsle: 0.15752 |  0:00:43s\n",
-      "epoch 8  | loss: 3.71072 | val_0_rmsle: 0.15661 |  0:00:49s\n",
-      "epoch 9  | loss: 3.70443 | val_0_rmsle: 0.15901 |  0:00:54s\n",
-      "epoch 10 | loss: 3.70822 | val_0_rmsle: 0.15673 |  0:01:00s\n",
-      "epoch 11 | loss: 3.70083 | val_0_rmsle: 0.15646 |  0:01:06s\n",
-      "epoch 12 | loss: 3.68392 | val_0_rmsle: 0.15587 |  0:01:11s\n",
-      "epoch 13 | loss: 3.67879 | val_0_rmsle: 0.15574 |  0:01:17s\n",
-      "epoch 14 | loss: 3.67523 | val_0_rmsle: 0.15691 |  0:01:22s\n",
-      "epoch 15 | loss: 3.6612  | val_0_rmsle: 0.15644 |  0:01:28s\n",
-      "epoch 16 | loss: 3.65866 | val_0_rmsle: 0.15524 |  0:01:33s\n",
-      "epoch 17 | loss: 3.67338 | val_0_rmsle: 0.15775 |  0:01:39s\n",
-      "epoch 18 | loss: 3.66952 | val_0_rmsle: 0.16102 |  0:01:44s\n",
-      "epoch 19 | loss: 3.69518 | val_0_rmsle: 0.15531 |  0:01:49s\n",
-      "epoch 20 | loss: 3.65186 | val_0_rmsle: 0.15727 |  0:01:55s\n",
-      "epoch 21 | loss: 3.63407 | val_0_rmsle: 0.15543 |  0:02:00s\n",
-      "epoch 22 | loss: 3.65079 | val_0_rmsle: 0.15858 |  0:02:06s\n",
-      "epoch 23 | loss: 3.65247 | val_0_rmsle: 0.1561  |  0:02:11s\n",
-      "epoch 24 | loss: 3.62029 | val_0_rmsle: 0.15886 |  0:02:17s\n",
-      "epoch 25 | loss: 3.64115 | val_0_rmsle: 0.15926 |  0:02:22s\n",
-      "epoch 26 | loss: 3.65729 | val_0_rmsle: 0.15907 |  0:02:28s\n",
+      "epoch 0  | loss: 12.42995| val_0_rmsle: 0.19312 |  0:00:04s\n",
+      "epoch 1  | loss: 3.94806 | val_0_rmsle: 0.16452 |  0:00:09s\n",
+      "epoch 2  | loss: 3.83119 | val_0_rmsle: 0.16248 |  0:00:14s\n",
+      "epoch 3  | loss: 3.83368 | val_0_rmsle: 0.16782 |  0:00:19s\n",
+      "epoch 4  | loss: 3.80894 | val_0_rmsle: 0.15865 |  0:00:24s\n",
+      "epoch 5  | loss: 3.79094 | val_0_rmsle: 0.15683 |  0:00:29s\n",
+      "epoch 6  | loss: 3.7193  | val_0_rmsle: 0.15757 |  0:00:34s\n",
+      "epoch 7  | loss: 3.70343 | val_0_rmsle: 0.15752 |  0:00:39s\n",
+      "epoch 8  | loss: 3.71072 | val_0_rmsle: 0.15661 |  0:00:44s\n",
+      "epoch 9  | loss: 3.70443 | val_0_rmsle: 0.15901 |  0:00:49s\n",
+      "epoch 10 | loss: 3.70822 | val_0_rmsle: 0.15673 |  0:00:55s\n",
+      "epoch 11 | loss: 3.70083 | val_0_rmsle: 0.15646 |  0:01:00s\n",
+      "epoch 12 | loss: 3.68392 | val_0_rmsle: 0.15587 |  0:01:05s\n",
+      "epoch 13 | loss: 3.67879 | val_0_rmsle: 0.15574 |  0:01:10s\n",
+      "epoch 14 | loss: 3.67523 | val_0_rmsle: 0.15691 |  0:01:14s\n",
+      "epoch 15 | loss: 3.6612  | val_0_rmsle: 0.15644 |  0:01:19s\n",
+      "epoch 16 | loss: 3.65866 | val_0_rmsle: 0.15524 |  0:01:24s\n",
+      "epoch 17 | loss: 3.67338 | val_0_rmsle: 0.15775 |  0:01:29s\n",
+      "epoch 18 | loss: 3.66952 | val_0_rmsle: 0.16102 |  0:01:34s\n",
+      "epoch 19 | loss: 3.69518 | val_0_rmsle: 0.15531 |  0:01:39s\n",
+      "epoch 20 | loss: 3.65186 | val_0_rmsle: 0.15727 |  0:01:44s\n",
+      "epoch 21 | loss: 3.63407 | val_0_rmsle: 0.15543 |  0:01:49s\n",
+      "epoch 22 | loss: 3.65079 | val_0_rmsle: 0.15858 |  0:01:54s\n",
+      "epoch 23 | loss: 3.65247 | val_0_rmsle: 0.1561  |  0:01:59s\n",
+      "epoch 24 | loss: 3.62029 | val_0_rmsle: 0.15886 |  0:02:04s\n",
+      "epoch 25 | loss: 3.64115 | val_0_rmsle: 0.15926 |  0:02:09s\n",
+      "epoch 26 | loss: 3.65729 | val_0_rmsle: 0.15907 |  0:02:14s\n",
       "\n",
       "Early stopping occurred at epoch 26 with best_epoch = 16 and best_val_0_rmsle = 0.15524\n"
      ]
@@ -437,19 +437,19 @@
   {
    "cell_type": "code",
    "execution_count": 8,
-   "id": "e44c1cba",
+   "id": "1871bc90",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:33:06.279257Z",
-     "iopub.status.busy": "2024-04-14T13:33:06.278191Z",
-     "iopub.status.idle": "2024-04-14T13:33:06.284509Z",
-     "shell.execute_reply": "2024-04-14T13:33:06.282954Z"
+     "iopub.execute_input": "2024-04-15T13:58:03.931278Z",
+     "iopub.status.busy": "2024-04-15T13:58:03.930433Z",
+     "iopub.status.idle": "2024-04-15T13:58:03.935595Z",
+     "shell.execute_reply": "2024-04-15T13:58:03.934262Z"
     },
     "papermill": {
-     "duration": 0.023411,
-     "end_time": "2024-04-14T13:33:06.287549",
+     "duration": 0.023153,
+     "end_time": "2024-04-15T13:58:03.938415",
      "exception": false,
-     "start_time": "2024-04-14T13:33:06.264138",
+     "start_time": "2024-04-15T13:58:03.915262",
      "status": "completed"
     },
     "tags": []
@@ -467,13 +467,13 @@
   },
   {
    "cell_type": "markdown",
-   "id": "78795a28",
+   "id": "0d609156",
    "metadata": {
     "papermill": {
-     "duration": 0.011999,
-     "end_time": "2024-04-14T13:33:06.311817",
+     "duration": 0.013207,
+     "end_time": "2024-04-15T13:58:03.965799",
      "exception": false,
-     "start_time": "2024-04-14T13:33:06.299818",
+     "start_time": "2024-04-15T13:58:03.952592",
      "status": "completed"
     },
     "tags": []
@@ -485,19 +485,19 @@
   {
    "cell_type": "code",
    "execution_count": 9,
-   "id": "d708911c",
+   "id": "ba315809",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:33:06.339581Z",
-     "iopub.status.busy": "2024-04-14T13:33:06.339170Z",
-     "iopub.status.idle": "2024-04-14T13:33:07.237398Z",
-     "shell.execute_reply": "2024-04-14T13:33:07.236400Z"
+     "iopub.execute_input": "2024-04-15T13:58:03.995009Z",
+     "iopub.status.busy": "2024-04-15T13:58:03.994588Z",
+     "iopub.status.idle": "2024-04-15T13:58:04.839997Z",
+     "shell.execute_reply": "2024-04-15T13:58:04.838151Z"
     },
     "papermill": {
-     "duration": 0.915381,
-     "end_time": "2024-04-14T13:33:07.240437",
+     "duration": 0.863288,
+     "end_time": "2024-04-15T13:58:04.842676",
      "exception": false,
-     "start_time": "2024-04-14T13:33:06.325056",
+     "start_time": "2024-04-15T13:58:03.979388",
      "status": "completed"
     },
     "tags": []
@@ -515,23 +515,94 @@
     "from xgboost import XGBRegressor\n",
     "xgb_model = XGBRegressor()\n",
     "xgb_model.fit(X_train, y_train)\n",
-    "# 在验证集上进行预测\n",
+    "# Making predictions on the validation set\n",
     "y_val_pred_xgb = xgb_model.predict(X_val)\n",
     "\n",
-    "# 评估模型\n",
+    "# evaluate the model\n",
     "val_rmse = mean_squared_error(y_val, y_val_pred_xgb, squared=False)\n",
     "print(\"Validation RMSE:\", val_rmse)"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "d528aefa",
+   "id": "69f123f4",
    "metadata": {
     "papermill": {
-     "duration": 0.011804,
-     "end_time": "2024-04-14T13:33:07.265654",
+     "duration": 0.013295,
+     "end_time": "2024-04-15T13:58:04.871099",
      "exception": false,
-     "start_time": "2024-04-14T13:33:07.253850",
+     "start_time": "2024-04-15T13:58:04.857804",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# LGBM"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "c93a97d9",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-15T13:58:04.900747Z",
+     "iopub.status.busy": "2024-04-15T13:58:04.899870Z",
+     "iopub.status.idle": "2024-04-15T13:58:07.002257Z",
+     "shell.execute_reply": "2024-04-15T13:58:07.000587Z"
+    },
+    "papermill": {
+     "duration": 2.11987,
+     "end_time": "2024-04-15T13:58:07.004737",
+     "exception": false,
+     "start_time": "2024-04-15T13:58:04.884867",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/opt/conda/lib/python3.10/site-packages/sklearn/utils/validation.py:1143: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().\n",
+      "  y = column_or_1d(y, warn=True)\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.010659 seconds.\n",
+      "You can set `force_col_wise=true` to remove the overhead.\n",
+      "[LightGBM] [Info] Total Bins 1336\n",
+      "[LightGBM] [Info] Number of data points in the train set: 75833, number of used features: 10\n",
+      "[LightGBM] [Info] Start training from score 9.711972\n",
+      "Validation RMSE: 1.8670301071436686\n"
+     ]
+    }
+   ],
+   "source": [
+    "import lightgbm as lgb\n",
+    "lgb_model = lgb.LGBMRegressor()\n",
+    "lgb_model.fit(X_train, y_train)\n",
+    "# Making predictions on the validation set\n",
+    "y_val_pred_lgb = lgb_model.predict(X_val)\n",
+    "\n",
+    "# evaluate the model\n",
+    "val_rmse = mean_squared_error(y_val, y_val_pred_lgb, squared=False)\n",
+    "print(\"Validation RMSE:\", val_rmse)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e8c01c41",
+   "metadata": {
+    "papermill": {
+     "duration": 0.01395,
+     "end_time": "2024-04-15T13:58:07.033626",
+     "exception": false,
+     "start_time": "2024-04-15T13:58:07.019676",
      "status": "completed"
     },
     "tags": []
@@ -542,20 +613,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
-   "id": "106ac8a6",
+   "execution_count": 11,
+   "id": "4394b532",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:33:07.293267Z",
-     "iopub.status.busy": "2024-04-14T13:33:07.292027Z",
-     "iopub.status.idle": "2024-04-14T13:33:51.624291Z",
-     "shell.execute_reply": "2024-04-14T13:33:51.623063Z"
+     "iopub.execute_input": "2024-04-15T13:58:07.064001Z",
+     "iopub.status.busy": "2024-04-15T13:58:07.063323Z",
+     "iopub.status.idle": "2024-04-15T13:58:48.880318Z",
+     "shell.execute_reply": "2024-04-15T13:58:48.878906Z"
     },
     "papermill": {
-     "duration": 44.360094,
-     "end_time": "2024-04-14T13:33:51.637875",
+     "duration": 41.848583,
+     "end_time": "2024-04-15T13:58:48.896546",
      "exception": false,
-     "start_time": "2024-04-14T13:33:07.277781",
+     "start_time": "2024-04-15T13:58:07.047963",
      "status": "completed"
     },
     "tags": []
@@ -565,7 +636,7 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "/tmp/ipykernel_18/883492367.py:3: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().\n",
+      "/tmp/ipykernel_18/3979043488.py:3: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().\n",
       "  rf_model.fit(X_train, y_train)\n"
      ]
     },
@@ -573,7 +644,7 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Validation RMSE: 1.8878377159399782\n"
+      "Validation RMSE: 1.8894899500601432\n"
      ]
     }
    ],
@@ -581,22 +652,22 @@
     "from sklearn.ensemble import RandomForestRegressor\n",
     "rf_model = RandomForestRegressor()\n",
     "rf_model.fit(X_train, y_train)\n",
-    "# 在验证集上进行预测\n",
+    "# Making predictions on the validation set\n",
     "y_val_pred_rf = rf_model.predict(X_val)\n",
-    "# 评估模型\n",
+    "# evaluate the model\n",
     "val_rmse = mean_squared_error(y_val, y_val_pred_rf, squared=False)\n",
     "print(\"Validation RMSE:\", val_rmse)"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "e43d82fb",
+   "id": "550f7688",
    "metadata": {
     "papermill": {
-     "duration": 0.01201,
-     "end_time": "2024-04-14T13:33:51.662139",
+     "duration": 0.013992,
+     "end_time": "2024-04-15T13:58:48.925482",
      "exception": false,
-     "start_time": "2024-04-14T13:33:51.650129",
+     "start_time": "2024-04-15T13:58:48.911490",
      "status": "completed"
     },
     "tags": []
@@ -607,20 +678,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
-   "id": "04d8ab6b",
+   "execution_count": 12,
+   "id": "85a4e2dc",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:33:51.689083Z",
-     "iopub.status.busy": "2024-04-14T13:33:51.688213Z",
-     "iopub.status.idle": "2024-04-14T13:34:04.593568Z",
-     "shell.execute_reply": "2024-04-14T13:34:04.591904Z"
+     "iopub.execute_input": "2024-04-15T13:58:48.956475Z",
+     "iopub.status.busy": "2024-04-15T13:58:48.956086Z",
+     "iopub.status.idle": "2024-04-15T13:59:00.190464Z",
+     "shell.execute_reply": "2024-04-15T13:59:00.189157Z"
     },
     "papermill": {
-     "duration": 12.921614,
-     "end_time": "2024-04-14T13:34:04.596010",
+     "duration": 11.252912,
+     "end_time": "2024-04-15T13:59:00.193125",
      "exception": false,
-     "start_time": "2024-04-14T13:33:51.674396",
+     "start_time": "2024-04-15T13:58:48.940213",
      "status": "completed"
     },
     "tags": []
@@ -638,7 +709,7 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Validation RMSE: 1.9118569792242652\n"
+      "Validation RMSE: 1.911837972403849\n"
      ]
     }
    ],
@@ -646,29 +717,201 @@
     "from sklearn.ensemble import GradientBoostingRegressor\n",
     "gb_model = GradientBoostingRegressor()\n",
     "gb_model.fit(X_train, y_train)\n",
-    "# 在验证集上进行预测\n",
+    "# Making predictions on the validation set\n",
     "y_val_pred_gb = gb_model.predict(X_val)\n",
-    "# 评估模型\n",
+    "# evaluate the model\n",
     "val_rmse = mean_squared_error(y_val, y_val_pred_gb, squared=False)\n",
     "print(\"Validation RMSE:\", val_rmse)\n"
    ]
   },
   {
+   "cell_type": "markdown",
+   "id": "db176c3f",
+   "metadata": {
+    "papermill": {
+     "duration": 0.01416,
+     "end_time": "2024-04-15T13:59:00.222150",
+     "exception": false,
+     "start_time": "2024-04-15T13:59:00.207990",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# NODE"
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 12,
-   "id": "dbb3594d",
+   "execution_count": 13,
+   "id": "c9f814a5",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:34:04.623600Z",
-     "iopub.status.busy": "2024-04-14T13:34:04.623108Z",
-     "iopub.status.idle": "2024-04-14T13:34:04.674258Z",
-     "shell.execute_reply": "2024-04-14T13:34:04.672706Z"
+     "iopub.execute_input": "2024-04-15T13:59:00.253793Z",
+     "iopub.status.busy": "2024-04-15T13:59:00.252669Z",
+     "iopub.status.idle": "2024-04-15T13:59:00.262406Z",
+     "shell.execute_reply": "2024-04-15T13:59:00.261265Z"
     },
     "papermill": {
-     "duration": 0.06973,
-     "end_time": "2024-04-14T13:34:04.678552",
+     "duration": 0.028646,
+     "end_time": "2024-04-15T13:59:00.265040",
      "exception": false,
-     "start_time": "2024-04-14T13:34:04.608822",
+     "start_time": "2024-04-15T13:59:00.236394",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "# class NODEModel(nn.Module):\n",
+    "#     \"\"\"\n",
+    "#     Neural Oblivious Decision Ensembles (NODE) model.\n",
+    "#     \"\"\"\n",
+    "#     def __init__(self, input_dim, num_trees, depth):\n",
+    "#         \"\"\"\n",
+    "#         Initialize the NODE model.\n",
+    "        \n",
+    "#         Args:\n",
+    "#             input_dim (int): Number of input features.\n",
+    "#             num_trees (int): Number of decision trees in the ensemble.\n",
+    "#             depth (int): Depth of each decision tree.\n",
+    "#         \"\"\"\n",
+    "#         super(NODEModel, self).__init__()\n",
+    "#         self.num_trees = num_trees\n",
+    "#         self.depth = depth\n",
+    "        \n",
+    "#         # Create a list of decision trees\n",
+    "#         self.trees = nn.ModuleList([nn.Sequential(\n",
+    "#             nn.Linear(input_dim, 2 ** depth),\n",
+    "#             nn.ReLU(),\n",
+    "#             nn.Linear(2 ** depth, 1)\n",
+    "#         ) for _ in range(num_trees)])\n",
+    "    \n",
+    "#     def forward(self, x):\n",
+    "#         \"\"\"\n",
+    "#         Perform forward pass through the NODE model.\n",
+    "        \n",
+    "#         Args:\n",
+    "#             x (torch.Tensor): Input tensor.\n",
+    "            \n",
+    "#         Returns:\n",
+    "#             torch.Tensor: Averaged predictions from all decision trees.\n",
+    "#         \"\"\"\n",
+    "#         # Forward pass through each decision tree\n",
+    "#         outputs = [tree(x) for tree in self.trees]\n",
+    "        \n",
+    "#         # Average the predictions from all trees\n",
+    "#         return torch.mean(torch.stack(outputs), dim=0)\n",
+    "\n",
+    "# class AbaloneDataset(Dataset):\n",
+    "#     \"\"\"\n",
+    "#     Custom dataset class for abalone data.\n",
+    "#     \"\"\"\n",
+    "#     def __init__(self, X, y=None):\n",
+    "#         \"\"\"\n",
+    "#         Initialize the AbaloneDataset.\n",
+    "        \n",
+    "#         Args:\n",
+    "#             X (numpy.ndarray): Input features.\n",
+    "#             y (numpy.ndarray, optional): Target variable. Defaults to None.\n",
+    "#         \"\"\"\n",
+    "#         self.X = torch.tensor(X, dtype=torch.float32)\n",
+    "#         self.y = torch.tensor(y, dtype=torch.float32) if y is not None else None\n",
+    "    \n",
+    "#     def __len__(self):\n",
+    "#         \"\"\"\n",
+    "#         Return the length of the dataset.\n",
+    "        \n",
+    "#         Returns:\n",
+    "#             int: Length of the dataset.\n",
+    "#         \"\"\"\n",
+    "#         return len(self.X)\n",
+    "    \n",
+    "#     def __getitem__(self, idx):\n",
+    "#         \"\"\"\n",
+    "#         Get an item from the dataset.\n",
+    "        \n",
+    "#         Args:\n",
+    "#             idx (int): Index of the item.\n",
+    "            \n",
+    "#         Returns:\n",
+    "#             tuple: Input features and target variable (if available) for the given index.\n",
+    "#         \"\"\"\n",
+    "#         if self.y is not None:\n",
+    "#             return self.X[idx], self.y[idx]\n",
+    "#         else:\n",
+    "#             return self.X[idx]\n",
+    "\n",
+    "# params = {\n",
+    "#         'num_trees': trial.suggest_int('num_trees', 50, 200),\n",
+    "#         'depth': trial.suggest_int('depth', 4, 8),\n",
+    "#         'num_epochs': 200,\n",
+    "#         'batch_size': trial.suggest_int('batch_size', 16, 128),\n",
+    "#         'learning_rate': trial.suggest_float('learning_rate', 1e-4, 1e-2, log=True),\n",
+    "#         'early_stopping_patience': 10\n",
+    "#     }\n",
+    "# input_dim = X_train.shape[1]\n",
+    "# num_trees = params['num_trees']\n",
+    "# depth = params['depth']\n",
+    "# num_epochs = params['num_epochs']\n",
+    "# batch_size = params['batch_size']\n",
+    "# learning_rate = params['learning_rate']\n",
+    "# early_stopping_patience = params['early_stopping_patience']\n",
+    "\n",
+    "# device = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\n",
+    "# model = NODEModel(input_dim, num_trees, depth).to(device)\n",
+    "# criterion = nn.MSELoss()\n",
+    "# optimizer = optim.Adam(model.parameters(), lr=learning_rate)\n",
+    "\n",
+    "# for epoch in range(params[\"num_epochs\"]):\n",
+    "#     model.train()\n",
+    "#     optimizer.zero_grad()\n",
+    "#     outputs = model(X_train)\n",
+    "#     loss = criterion(outputs.squeeze(), y_train)\n",
+    "#     loss.backward()\n",
+    "#     optimizer.step()\n",
+    "\n",
+    "# model.eval()\n",
+    "# with torch.no_grad():\n",
+    "#     outputs = model(X_val)\n",
+    "#     val_predictions.extend(outputs.squeeze().cpu().numpy())\n",
+    "# val_rmse = np.sqrt(mean_squared_error(val_targets, val_predictions))\n",
+    "# print(f\"Validation RMSE: {val_rmse:.4f}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "bf36663c",
+   "metadata": {
+    "papermill": {
+     "duration": 0.014436,
+     "end_time": "2024-04-15T13:59:00.293944",
+     "exception": false,
+     "start_time": "2024-04-15T13:59:00.279508",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "6b2332d6",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-15T13:59:00.324433Z",
+     "iopub.status.busy": "2024-04-15T13:59:00.323994Z",
+     "iopub.status.idle": "2024-04-15T13:59:00.363211Z",
+     "shell.execute_reply": "2024-04-15T13:59:00.361640Z"
+    },
+    "papermill": {
+     "duration": 0.05926,
+     "end_time": "2024-04-15T13:59:00.367582",
+     "exception": false,
+     "start_time": "2024-04-15T13:59:00.308322",
      "status": "completed"
     },
     "tags": []
@@ -683,7 +926,7 @@
        "Ridge()"
       ]
      },
-     "execution_count": 12,
+     "execution_count": 14,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -692,28 +935,28 @@
     "from sklearn.ensemble import GradientBoostingRegressor\n",
     "from sklearn.linear_model import Ridge\n",
     "from sklearn.metrics import mean_squared_error\n",
-    "X_stacked_train = np.column_stack((y_val_pred_tabnet, y_val_pred_xgb, y_val_pred_rf, y_val_pred_gb))\n",
-    "# 使用Ridge回归拟合\n",
-    "ridge_regressor = Ridge(alpha=1.0)  # 可以调整alpha参数\n",
-    "ridge_regressor.fit(X_stacked_train, y_val)  # y_val是真实的目标值\n"
+    "X_stacked_train = np.column_stack((y_val_pred_tabnet, y_val_pred_xgb, y_val_pred_rf, y_val_pred_gb, y_val_pred_lgb))\n",
+    "# use Ridge regression\n",
+    "ridge_regressor = Ridge(alpha=1.0)  # adjust alpha parameter\n",
+    "ridge_regressor.fit(X_stacked_train, y_val)  # y_val is the true val label\n"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
-   "id": "1ff8ccb2",
+   "execution_count": 15,
+   "id": "1444cffa",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:34:04.738627Z",
-     "iopub.status.busy": "2024-04-14T13:34:04.737839Z",
-     "iopub.status.idle": "2024-04-14T13:34:04.896324Z",
-     "shell.execute_reply": "2024-04-14T13:34:04.895250Z"
+     "iopub.execute_input": "2024-04-15T13:59:00.433278Z",
+     "iopub.status.busy": "2024-04-15T13:59:00.432522Z",
+     "iopub.status.idle": "2024-04-15T13:59:00.583921Z",
+     "shell.execute_reply": "2024-04-15T13:59:00.582582Z"
     },
     "papermill": {
-     "duration": 0.192369,
-     "end_time": "2024-04-14T13:34:04.899357",
+     "duration": 0.188183,
+     "end_time": "2024-04-15T13:59:00.586800",
      "exception": false,
-     "start_time": "2024-04-14T13:34:04.706988",
+     "start_time": "2024-04-15T13:59:00.398617",
      "status": "completed"
     },
     "tags": []
@@ -732,20 +975,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
-   "id": "f81ae3df",
+   "execution_count": 16,
+   "id": "3c2b91b0",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:34:04.930652Z",
-     "iopub.status.busy": "2024-04-14T13:34:04.929921Z",
-     "iopub.status.idle": "2024-04-14T13:34:06.505973Z",
-     "shell.execute_reply": "2024-04-14T13:34:06.504770Z"
+     "iopub.execute_input": "2024-04-15T13:59:00.618762Z",
+     "iopub.status.busy": "2024-04-15T13:59:00.618346Z",
+     "iopub.status.idle": "2024-04-15T13:59:02.002438Z",
+     "shell.execute_reply": "2024-04-15T13:59:02.001257Z"
     },
     "papermill": {
-     "duration": 1.595158,
-     "end_time": "2024-04-14T13:34:06.508811",
+     "duration": 1.40366,
+     "end_time": "2024-04-15T13:59:02.005734",
      "exception": false,
-     "start_time": "2024-04-14T13:34:04.913653",
+     "start_time": "2024-04-15T13:59:00.602074",
      "status": "completed"
     },
     "tags": []
@@ -775,20 +1018,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 15,
-   "id": "78d7ddc5",
+   "execution_count": 17,
+   "id": "6a9ccbca",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:34:06.537871Z",
-     "iopub.status.busy": "2024-04-14T13:34:06.537362Z",
-     "iopub.status.idle": "2024-04-14T13:34:06.628157Z",
-     "shell.execute_reply": "2024-04-14T13:34:06.627070Z"
+     "iopub.execute_input": "2024-04-15T13:59:02.038021Z",
+     "iopub.status.busy": "2024-04-15T13:59:02.037588Z",
+     "iopub.status.idle": "2024-04-15T13:59:02.125904Z",
+     "shell.execute_reply": "2024-04-15T13:59:02.124875Z"
     },
     "papermill": {
-     "duration": 0.108799,
-     "end_time": "2024-04-14T13:34:06.630886",
+     "duration": 0.108291,
+     "end_time": "2024-04-15T13:59:02.128736",
      "exception": false,
-     "start_time": "2024-04-14T13:34:06.522087",
+     "start_time": "2024-04-15T13:59:02.020445",
      "status": "completed"
     },
     "tags": []
@@ -800,20 +1043,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 16,
-   "id": "ed057818",
+   "execution_count": 18,
+   "id": "50665367",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:34:06.661187Z",
-     "iopub.status.busy": "2024-04-14T13:34:06.660004Z",
-     "iopub.status.idle": "2024-04-14T13:34:08.921801Z",
-     "shell.execute_reply": "2024-04-14T13:34:08.920517Z"
+     "iopub.execute_input": "2024-04-15T13:59:02.160535Z",
+     "iopub.status.busy": "2024-04-15T13:59:02.159650Z",
+     "iopub.status.idle": "2024-04-15T13:59:04.269758Z",
+     "shell.execute_reply": "2024-04-15T13:59:04.268775Z"
     },
     "papermill": {
-     "duration": 2.279558,
-     "end_time": "2024-04-14T13:34:08.924956",
+     "duration": 2.128972,
+     "end_time": "2024-04-15T13:59:04.272456",
      "exception": false,
-     "start_time": "2024-04-14T13:34:06.645398",
+     "start_time": "2024-04-15T13:59:02.143484",
      "status": "completed"
     },
     "tags": []
@@ -825,20 +1068,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 17,
-   "id": "38482880",
+   "execution_count": 19,
+   "id": "58239411",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:34:08.953167Z",
-     "iopub.status.busy": "2024-04-14T13:34:08.952706Z",
-     "iopub.status.idle": "2024-04-14T13:34:09.064770Z",
-     "shell.execute_reply": "2024-04-14T13:34:09.063149Z"
+     "iopub.execute_input": "2024-04-15T13:59:04.303533Z",
+     "iopub.status.busy": "2024-04-15T13:59:04.303089Z",
+     "iopub.status.idle": "2024-04-15T13:59:04.409529Z",
+     "shell.execute_reply": "2024-04-15T13:59:04.408404Z"
     },
     "papermill": {
-     "duration": 0.129277,
-     "end_time": "2024-04-14T13:34:09.067571",
+     "duration": 0.125001,
+     "end_time": "2024-04-15T13:59:04.412159",
      "exception": false,
-     "start_time": "2024-04-14T13:34:08.938294",
+     "start_time": "2024-04-15T13:59:04.287158",
      "status": "completed"
     },
     "tags": []
@@ -850,20 +1093,45 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 18,
-   "id": "29808d5f",
+   "execution_count": 20,
+   "id": "d1a68405",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:34:09.095462Z",
-     "iopub.status.busy": "2024-04-14T13:34:09.094997Z",
-     "iopub.status.idle": "2024-04-14T13:34:09.108903Z",
-     "shell.execute_reply": "2024-04-14T13:34:09.107181Z"
+     "iopub.execute_input": "2024-04-15T13:59:04.444052Z",
+     "iopub.status.busy": "2024-04-15T13:59:04.443637Z",
+     "iopub.status.idle": "2024-04-15T13:59:04.626584Z",
+     "shell.execute_reply": "2024-04-15T13:59:04.625668Z"
     },
     "papermill": {
-     "duration": 0.033069,
-     "end_time": "2024-04-14T13:34:09.113553",
+     "duration": 0.202016,
+     "end_time": "2024-04-15T13:59:04.629417",
      "exception": false,
-     "start_time": "2024-04-14T13:34:09.080484",
+     "start_time": "2024-04-15T13:59:04.427401",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "y_test_pred_lgb = lgb_model.predict(test_scaled)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "7c2fb9c0",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-04-15T13:59:04.662488Z",
+     "iopub.status.busy": "2024-04-15T13:59:04.662045Z",
+     "iopub.status.idle": "2024-04-15T13:59:04.675565Z",
+     "shell.execute_reply": "2024-04-15T13:59:04.674565Z"
+    },
+    "papermill": {
+     "duration": 0.035226,
+     "end_time": "2024-04-15T13:59:04.681289",
+     "exception": false,
+     "start_time": "2024-04-15T13:59:04.646063",
      "status": "completed"
     },
     "tags": []
@@ -873,39 +1141,39 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "[[10.27751851]\n",
-      " [ 9.80350197]\n",
-      " [10.115603  ]\n",
+      "[[10.29823049]\n",
+      " [ 9.7492154 ]\n",
+      " [10.13659373]\n",
       " ...\n",
-      " [12.16525833]\n",
-      " [12.78924744]\n",
-      " [ 8.81601348]]\n"
+      " [12.37967039]\n",
+      " [12.7572765 ]\n",
+      " [ 8.62963482]]\n"
      ]
     }
    ],
    "source": [
     "# 使用集成模型进行预测\n",
-    "X_stacked_test = np.column_stack((y_test_pred_tabnet, y_test_pred_xgb, y_test_pred_rf, y_test_pred_gb))\n",
+    "X_stacked_test = np.column_stack((y_test_pred_tabnet, y_test_pred_xgb, y_test_pred_rf, y_test_pred_gb, y_test_pred_lgb))\n",
     "y_test_pred_ensemble = ridge_regressor.predict(X_stacked_test)\n",
     "print(y_test_pred_ensemble)"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 19,
-   "id": "4ecdaaa6",
+   "execution_count": 22,
+   "id": "a40bd0da",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2024-04-14T13:34:09.174168Z",
-     "iopub.status.busy": "2024-04-14T13:34:09.173285Z",
-     "iopub.status.idle": "2024-04-14T13:34:09.415695Z",
-     "shell.execute_reply": "2024-04-14T13:34:09.414239Z"
+     "iopub.execute_input": "2024-04-15T13:59:04.746011Z",
+     "iopub.status.busy": "2024-04-15T13:59:04.745326Z",
+     "iopub.status.idle": "2024-04-15T13:59:04.972208Z",
+     "shell.execute_reply": "2024-04-15T13:59:04.971085Z"
     },
     "papermill": {
-     "duration": 0.27578,
-     "end_time": "2024-04-14T13:34:09.418555",
+     "duration": 0.262477,
+     "end_time": "2024-04-15T13:59:04.975047",
      "exception": false,
-     "start_time": "2024-04-14T13:34:09.142775",
+     "start_time": "2024-04-15T13:59:04.712570",
      "status": "completed"
     },
     "tags": []
@@ -958,14 +1226,14 @@
   },
   "papermill": {
    "default_parameters": {},
-   "duration": 251.439803,
-   "end_time": "2024-04-14T13:34:12.435495",
+   "duration": 229.129183,
+   "end_time": "2024-04-15T13:59:06.616117",
    "environment_variables": {},
    "exception": null,
    "input_path": "__notebook__.ipynb",
    "output_path": "__notebook__.ipynb",
    "parameters": {},
-   "start_time": "2024-04-14T13:30:00.995692",
+   "start_time": "2024-04-15T13:55:17.486934",
    "version": "2.5.0"
   }
  },
